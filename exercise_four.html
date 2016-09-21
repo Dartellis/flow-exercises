@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Javascript | Flow | Four</title>
+</head>
+<body>
+    <script>
+        /*
+            Calvinball (http://www.picpak.net/calvin/oldsite/images/oogy.gif) is a game with a very complicated scoring system. Your job is to write a piece of code which determines the winner of a game.
+            
+            Provided below are three different player's scores. Uncomment one at a time to calculate the score for that player.
+            
+            Calvinball Rules:
+                1. A player's score is equal to 500 if their score is not already a number. (this is implemented below).
+                2. A player's score is reduced by 300 if they are crying. Otherwise it is increased by 50.
+                3. A player's score is reduced by 77 if their last play was "Q"
+                4. A player gets an extra 395 points if they are in a tree, unless their last play was a number.
+                5. A player's score is doubled if they are holding the broom handle, but it is tripled if they have the broom brush. Otherwise the player's score is halved.
+                6. A player's score is multiplied by 1.5 if they are carrying the ball but only if they are not in a tree. Disregard this rule if the player is crying.
+                7. If the player's last play was a number (not a letter), the player's score is multiplied by that amount.
+
+                8. Demonstrate knowledge of objected oriented programming by creating a player class because this is kindof late. 
+        */
+
+        class Player {
+            constructor(score, last_play, broom, has_ball, is_in_tree, crying){
+                this.score = score;
+                this.last_play = last_play;
+                this.broom = broom;
+                this.has_ball = has_ball;
+                this.is_in_tree = is_in_tree;
+                this.crying = crying;
+            }
+
+            get getScore(){
+                return this.calcScore; 
+            }
+
+            calcScore(){
+                if (typeof(this.score) != "number"){
+                    this.score = 500;
+                }
+
+                if (this.crying){
+                    this.score -= 300;
+                } else{
+                    this.score += 5; 
+                }
+
+                if (this.last_play==="Q"){
+                    this.score -= 77;
+                }
+
+                if (this.is_in_tree && typeof(this.last_play) != "number"){
+                    this.score += 395;
+                }
+
+                if (this.broom == "handle"){
+                    this.score *= 2; 
+                } else if (this.broom == "brush"){
+                    this.score *= 3;
+                } else {
+                    this.score /= 2;
+                }
+
+                if (this.score > 9000){
+                    this.score = "Laugh at meme refrence";
+                }
+
+                if (!this.crying && this.has_ball && !this.is_in_tree){
+                    this.score *= 1.5;
+                }
+
+                if (typeof(this.last_play) == "number"){
+                    this.score *= this.last_play;
+                }
+
+                return this.score;
+            }
+        }
+
+        var players = [];
+        players[0] = new Player(193,'Q','handle',false,false,false);
+        players[1] = new Player(394,'W','none',true,true,false);
+        players[2] = new Player('f',1.5,'brush',true,false,true);
+
+        for(i = 0; i < players.length; i++){
+            console.log("Player " + i + " is: " + players[i].getScore());
+        }
+        
+    </script>
+</body>
+</html>
